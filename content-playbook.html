@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playground Content Playbook — Deccan AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#15201C;
+    --true-black:#15201C;
+    --blue:#2A7CB5;
+    --blue-tint:#E9F5FE;
+    --warm-white:#FBFAF7;
+    --grey:#6C7D76;
+    --grey-light:#9AA8A2;
+    --white:#FFFFFF;
+    --line: #E8E6DF;
+    --sidebar-w: 272px;
+
+    /* full accent family, matched to the reference playbook's palette */
+    --lav:#A99BF0;   --lav-t:#F3F0FE;   --lav-d:#6A55C9;
+    --peach:#F2A473; --peach-t:#FFF3E9; --peach-d:#C2662A;
+    --sky:#79C2EF;   --sky-t:#E9F5FE;   --sky-d:#2A7CB5;
+    --pink:#EF8FB0;  --pink-t:#FDEEF4;  --pink-d:#BF4A74;
+    --mint:#6ECFA6;  --mint-t:#ECFAF3;  --mint-d:#2A8D66;
+    --butter:#EEC96A; --butter-t:#FDF6E2; --butter-d:#A07A1A;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    background:var(--warm-white);
+    color:var(--true-black);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--blue);}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:.72rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--blue);
+  }
+  h1,h2,h3,h4{font-weight:700; color:var(--black); letter-spacing:-0.01em; margin:0;}
+  p{margin:0 0 1em 0;}
+  ul,ol{margin:0 0 1em 0; padding-left:1.2em;}
+  li{margin-bottom:.35em;}
+
+  /* ---------- Layout ---------- */
+  .layout{display:flex; min-height:100vh;}
+
+  /* Sidebar */
+  .sidebar{
+    width:var(--sidebar-w); flex-shrink:0;
+    background:var(--black); color:var(--warm-white);
+    position:fixed; top:0; left:0; bottom:0;
+    overflow-y:auto;
+    padding:28px 22px 40px;
+    z-index:50;
+    transition:transform .25s ease;
+  }
+  .sidebar .brand{margin-bottom:24px; padding-bottom:18px; border-bottom:1px solid rgba(255,255,255,0.08);}
+  .sidebar .brand .brand-logo{height:26px; width:auto; display:block; margin-bottom:10px;}
+  .sidebar .brand .sub{font-size:.72rem; color:var(--blue); letter-spacing:.1em; text-transform:uppercase; font-weight:700; margin-top:4px;}
+  .sidebar .brand .tagline{font-size:.66rem; color:rgba(246,243,240,0.35); font-style:italic; margin-top:8px;}
+  .navgroup{margin-bottom:18px;}
+  .navgroup .navlabel{
+    font-size:.68rem; text-transform:uppercase; letter-spacing:.12em; color:var(--grey-light);
+    margin:0 0 8px 2px; font-weight:700;
+  }
+  .navgroup a{
+    display:block; color:rgba(246,243,240,0.72); text-decoration:none;
+    font-size:.86rem; padding:6px 8px; border-radius:6px; margin-bottom:2px;
+    border-left:2px solid transparent;
+  }
+  .navgroup a:hover{color:var(--white); background:rgba(255,255,255,0.05);}
+  .navgroup a.active{color:var(--white); border-left:2px solid var(--blue); background:rgba(42,124,181,0.12);}
+  .navgroup a.sub{padding-left:18px; font-size:.8rem; color:rgba(246,243,240,0.5);}
+
+  .menu-toggle{
+    display:none; position:fixed; top:16px; left:16px; z-index:60;
+    background:var(--black); color:var(--white); border:none; border-radius:8px;
+    width:40px;height:40px; align-items:center; justify-content:center; cursor:pointer;
+  }
+  .menu-toggle span, .menu-toggle span::before, .menu-toggle span::after{
+    content:""; display:block; width:18px; height:2px; background:var(--white); position:relative; margin:auto;
+  }
+  .menu-toggle span::before{position:absolute; top:-6px;}
+  .menu-toggle span::after{position:absolute; top:6px;}
+
+  /* Main content */
+  main{margin-left:var(--sidebar-w); flex:1; min-width:0;}
+  .content{max-width:860px; margin:0 auto; padding:56px 48px 120px;}
+
+  /* Hero */
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(240px 240px at 100% 0%, rgba(246,243,240,0) 0%, rgba(246,243,240,0) 28%, var(--warm-white) 62%),
+      url("data:image/png;base64,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AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwH/agwMSAAAAAEH/X7cjUAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPgLl82v93ILZpUAAAAASUVORK5CYII=") no-repeat top right/150px auto;
+    background-repeat:no-repeat;
+  }
+  .hero h1{font-size:2.6rem; line-height:1.08; margin:10px 0 14px;}
+  .hero .lede{font-size:1.08rem; color:#3a3a3d; max-width:640px;}
+  .hero-meta{
+    display:flex; gap:22px; flex-wrap:wrap; margin-top:18px; padding-top:18px;
+    border-top:1px solid var(--line); font-size:.82rem; color:var(--grey);
+  }
+  .hero-meta b{color:var(--black);}
+  .print-btn{
+    margin-top:20px; display:inline-flex; align-items:center; gap:8px;
+    background:var(--black); color:var(--warm-white); border:none; padding:10px 18px;
+    border-radius:8px; font-size:.84rem; font-weight:600; cursor:pointer;
+  }
+  .print-btn:hover{background:var(--blue);}
+
+  /* Pipeline (signature element) */
+  .pipeline-wrap{margin:44px 0 56px; position:relative;}
+  .pipeline{
+    position:relative; display:grid; grid-template-columns:repeat(4,1fr); gap:20px; z-index:1;
+  }
+  .pipeline::before{
+    content:""; position:absolute; top:23px; left:12.5%; right:12.5%; height:2px;
+    background:var(--blue); opacity:.3; z-index:0;
+  }
+  .phase{position:relative;}
+  .phase-node{
+    display:flex; flex-direction:column; align-items:center; text-decoration:none; gap:8px; position:relative; z-index:1;
+  }
+  .phase-num{
+    width:46px; height:46px; border-radius:50%; background:var(--white); border:2px solid var(--blue);
+    color:var(--black); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1.05rem;
+  }
+  .phase-name{
+    font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--black); text-align:center;
+  }
+  .phase-steps{list-style:none; margin:12px 0 0; padding:0; display:flex; flex-direction:column; gap:6px; align-items:center;}
+  .phase-steps li a{
+    font-size:.76rem; color:var(--grey); text-decoration:none; border-bottom:1px dotted var(--grey-light);
+    text-align:center;
+  }
+  .phase-steps li a:hover{color:var(--blue); border-color:var(--blue);}
+
+  /* Sections */
+  section{padding:52px 0; border-top:1px solid var(--line);}
+  section:first-of-type{border-top:none;}
+  section h2{font-size:1.5rem; margin-bottom:6px;}
+  .section-eyebrow{margin-bottom:10px; display:block;}
+  .section-intro{color:#4a4a4d; max-width:680px; margin-bottom:24px;}
+
+  /* Structure diagram */
+  .structure{display:flex; flex-direction:column; gap:0; margin:24px 0;}
+  .s-box{border:1.5px solid var(--black); border-radius:10px; padding:14px 18px; background:var(--white);}
+  .s-box .s-title{font-weight:700; font-size:.95rem;}
+  .s-box .s-desc{font-size:.82rem; color:var(--grey); margin-top:2px;}
+  .s-lp{background:var(--black); color:var(--warm-white); border-color:var(--black);}
+  .s-lp .s-desc{color:var(--grey-light);}
+  .s-arrow{align-self:center; color:var(--blue); font-size:1.1rem; margin:2px 0;}
+  .s-nest{margin-left:26px; border-left:2px dashed var(--blue); padding-left:22px; margin-top:-2px; padding-top:14px; padding-bottom:2px;}
+  .s-nodes{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;}
+  .node-chip{background:var(--blue-tint); color:var(--blue); font-size:.76rem; font-weight:600; padding:5px 10px; border-radius:20px;}
+  .node-chip.dim{background:var(--warm-white); color:var(--grey); border:1px dashed var(--grey-light);}
+
+  /* Glossary quick box */
+  .term-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:20px;}
+  .term{background:var(--white); border:1px solid var(--line); border-radius:10px; padding:14px 16px;}
+  .term .t-name{font-weight:700; font-size:.88rem; color:var(--blue);}
+  .term .t-def{font-size:.84rem; color:#3a3a3d; margin-top:4px;}
+
+  /* Checklist */
+  .progress-bar-outer{background:var(--white); border:1px solid var(--line); border-radius:20px; height:10px; overflow:hidden; margin:6px 0 4px;}
+  .progress-bar-inner{background:var(--blue); height:100%; width:0%; transition:width .3s ease;}
+  .progress-label{font-size:.8rem; color:var(--grey); font-weight:600;}
+  .checklist-group{margin-top:30px;}
+  .checklist-group h3{font-size:1rem; margin-bottom:2px;}
+  .checklist-group .g-desc{font-size:.82rem; color:var(--grey); margin-bottom:14px;}
+  .check-item{
+    background:var(--white); border:1px solid var(--line); border-radius:10px;
+    padding:14px 16px; margin-bottom:10px; display:flex; gap:12px; align-items:flex-start;
+  }
+  .check-item input[type="checkbox"]{
+    width:18px; height:18px; margin-top:2px; accent-color:var(--blue); flex-shrink:0; cursor:pointer;
+  }
+  .check-item .ci-body{flex:1; min-width:0;}
+  .check-item .ci-label{font-weight:700; font-size:.9rem;}
+  .check-item .ci-hint{font-size:.8rem; color:var(--grey); margin-top:2px; margin-bottom:8px;}
+  .fill-field{
+    border:1px dashed var(--grey-light); border-radius:8px; padding:9px 11px; font-size:.85rem;
+    min-height:20px; background:var(--warm-white); outline:none;
+  }
+  .fill-field:focus{border-color:var(--blue); background:var(--white);}
+  .fill-field:empty:before{content:attr(data-placeholder); color:var(--grey-light);}
+  select.fill-field{width:100%; font-family:inherit; appearance:none; -webkit-appearance:none; color:var(--true-black);}
+
+  .callout{
+    background:var(--blue-tint); border-left:3px solid var(--blue); border-radius:8px;
+    padding:14px 18px; font-size:.86rem; margin:18px 0;
+  }
+  .callout b{color:var(--black);}
+  .callout.pending{background:var(--warm-white); border:1px dashed var(--grey-light); border-left:3px dashed var(--blue);}
+
+  /* Steps */
+  .step{margin-bottom:30px; scroll-margin-top:20px;}
+  .step-head{display:flex; align-items:baseline; gap:10px; margin-bottom:6px;}
+  .step-tag{
+    font-size:.72rem; font-weight:800; color:var(--white); background:var(--black);
+    padding:2px 8px; border-radius:5px; letter-spacing:.05em;
+  }
+  .step h3{font-size:1.08rem;}
+  .step-body{font-size:.92rem; color:#333;}
+  .step-body ul{font-size:.92rem;}
+
+  table{width:100%; border-collapse:collapse; font-size:.85rem; margin:14px 0; background:var(--white);}
+  th,td{border:1px solid var(--line); padding:9px 11px; text-align:left; vertical-align:top;}
+  th{background:var(--black); color:var(--warm-white); font-weight:600; font-size:.78rem; text-transform:uppercase; letter-spacing:.04em;}
+  td[contenteditable="true"]{background:var(--warm-white); cursor:text;}
+  td[contenteditable="true"]:focus{background:var(--blue-tint); outline:1px solid var(--blue);}
+  tr:nth-child(even) td:not([contenteditable]){background:var(--warm-white);}
+
+  .add-row-btn{
+    background:var(--white); border:1.5px dashed var(--grey-light); color:var(--grey);
+    padding:8px 16px; border-radius:8px; font-size:.82rem; cursor:pointer; font-weight:600;
+  }
+  .add-row-btn:hover{border-color:var(--blue); color:var(--blue);}
+
+  .style-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:20px 0;}
+  .style-card{background:var(--white); border:1px solid var(--line); border-radius:10px; padding:16px 18px;}
+  .style-card .sc-label{font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--grey); font-weight:700;}
+  .style-card .sc-value{font-size:.98rem; font-weight:700; margin-top:4px;}
+  .style-card .sc-sub{font-size:.8rem; color:var(--grey); margin-top:2px;}
+  .swatch{display:inline-block; width:14px; height:14px; border-radius:4px; vertical-align:-2px; margin-right:6px; border:1px solid var(--line);}
+
+  .deck-links{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;}
+  .deck-links a{
+    background:var(--black); color:var(--warm-white); padding:8px 14px; border-radius:8px;
+    font-size:.82rem; text-decoration:none; font-weight:600;
+  }
+  .deck-links a:hover{background:var(--blue);}
+
+  .roles-grid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-top:20px;}
+  .role-card{background:var(--white); border:1px solid var(--line); border-radius:10px; padding:16px 18px;}
+  .role-card .r-title{font-weight:700; color:var(--blue); font-size:.92rem;}
+  .role-card ul{font-size:.83rem; margin-top:8px; padding-left:1.1em;}
+
+  footer{
+    border-top:1px solid var(--line); margin-top:20px; padding:34px 0 60px; font-size:.8rem; color:var(--grey);
+  }
+
+  @media (max-width: 980px){
+    .roles-grid{grid-template-columns:1fr;}
+    .style-grid{grid-template-columns:1fr;}
+    .term-grid{grid-template-columns:1fr;}
+  }
+
+  @media (max-width: 880px){
+    .menu-toggle{display:flex;}
+    .sidebar{transform:translateX(-100%); box-shadow:0 0 40px rgba(0,0,0,0.3);}
+    .sidebar.open{transform:translateX(0);}
+    main{margin-left:0;}
+    .content{padding:80px 22px 100px;}
+    .pipeline{grid-template-columns:1fr; gap:26px;}
+    .pipeline::before{left:23px; top:0; bottom:0; right:auto; width:2px; height:auto;}
+    .phase-node{flex-direction:row; align-items:center; justify-content:flex-start; gap:14px;}
+    .phase-name{text-align:left;}
+    .phase-steps{align-items:flex-start; margin-left:60px;}
+    .phase-steps li a{text-align:left;}
+  }
+
+  /* ============ Per-section accent variety (matches reference palette) ============ */
+  .accent-mint{--blue:var(--mint-d); --blue-tint:var(--mint-t);}
+  .accent-sky{--blue:var(--sky-d); --blue-tint:var(--sky-t);}
+  .accent-peach{--blue:var(--peach-d); --blue-tint:var(--peach-t);}
+  .accent-lav{--blue:var(--lav-d); --blue-tint:var(--lav-t);}
+  .accent-pink{--blue:var(--pink-d); --blue-tint:var(--pink-t);}
+  .accent-butter{--blue:var(--butter-d); --blue-tint:var(--butter-t);}
+
+  /* ============ Professional polish & interactivity ============ */
+  body{overflow-x:hidden;}
+
+  a:focus-visible, button:focus-visible, [contenteditable]:focus-visible, select:focus-visible, input:focus-visible{
+    outline:2px solid var(--blue); outline-offset:2px;
+  }
+
+  .sidebar::-webkit-scrollbar{width:6px;}
+  .sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15); border-radius:10px;}
+  .sidebar::-webkit-scrollbar-track{background:transparent;}
+
+  .navgroup a{transition:background .2s ease, color .2s ease, padding-left .2s ease;}
+  .navgroup a:hover, .navgroup a.active{padding-left:12px;}
+
+  .check-item, .term, .role-card, .style-card, .s-box{
+    transition:box-shadow .25s ease, transform .25s ease, border-color .25s ease, background .25s ease;
+  }
+  .check-item:hover, .term:hover, .role-card:hover, .style-card:hover{
+    box-shadow:0 10px 26px -14px rgba(17,17,19,0.22);
+    transform:translateY(-2px);
+    border-color:rgba(42,124,181,0.35);
+  }
+  .s-box:hover{box-shadow:0 12px 30px -16px rgba(17,17,19,0.28);}
+
+  .style-card, .term, .role-card{position:relative; overflow:hidden;}
+  .style-card::before, .term::before, .role-card::before{
+    content:""; position:absolute; top:0; left:0; right:0; height:3px;
+    background:linear-gradient(90deg, var(--blue), #79c2ef);
+    opacity:0; transition:opacity .25s ease;
+  }
+  .style-card:hover::before, .term:hover::before, .role-card:hover::before{opacity:1;}
+
+  .check-item.done{border-color:rgba(42,124,181,0.45); background:var(--blue-tint);}
+  .check-item.done .ci-label{color:var(--blue);}
+  .check-item.done .ci-label::after{content:" ✓"; color:var(--blue);}
+
+  .fill-field:hover{border-color:var(--grey);}
+  .fill-field:focus, select.fill-field:focus{box-shadow:0 0 0 3px var(--blue-tint);}
+
+  .print-btn, .add-row-btn{display:inline-flex; align-items:center; gap:8px; transition:transform .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease;}
+  .print-btn{box-shadow:0 8px 20px -8px rgba(42,124,181,0.55);}
+  .print-btn:hover{transform:translateY(-2px); box-shadow:0 12px 26px -8px rgba(42,124,181,0.65);}
+  .add-row-btn:hover{transform:translateY(-2px); box-shadow:0 8px 18px -10px rgba(42,124,181,0.4);}
+  .print-btn svg, .add-row-btn svg{width:15px; height:15px; flex-shrink:0;}
+  .btn-row{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:14px;}
+
+  .progress-bar-inner{background:linear-gradient(90deg, var(--blue), #79c2ef);}
+
+  .deck-links a{transition:background .2s ease, transform .2s ease, box-shadow .2s ease;}
+  .deck-links a:hover{transform:translateY(-2px); box-shadow:0 10px 22px -10px rgba(42,124,181,0.55);}
+
+  .phase-node{transition:transform .2s ease;}
+  .phase-node:hover{transform:translateY(-3px);}
+  .phase-num{transition:box-shadow .2s ease, border-color .2s ease;}
+  .phase-node:hover .phase-num{box-shadow:0 0 0 6px var(--blue-tint); border-color:var(--blue);}
+
+  .tracker-scroll{max-height:420px; overflow:auto; border-radius:10px; border:1px solid var(--line);}
+  .tracker-scroll table{margin:0; border:none;}
+  .tracker-scroll thead th{position:sticky; top:0; z-index:2;}
+  table tbody tr:hover td:not([contenteditable]){background:var(--blue-tint);}
+
+  .prompt-block{
+    white-space:pre-wrap; background:#0D1117; color:#D7DDE5; border-radius:10px;
+    padding:34px 16px 16px; margin-top:12px; position:relative; overflow:auto;
+    font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;
+    font-size:.8rem; line-height:1.65;
+  }
+  .prompt-block::before{
+    content:"● ● ●"; position:absolute; top:11px; left:14px; letter-spacing:4px;
+    font-size:.55rem; color:#5B6472; font-family:inherit;
+  }
+
+  .section-eyebrow{position:relative; padding-bottom:10px;}
+  .section-eyebrow::after{content:""; position:absolute; left:0; bottom:0; width:36px; height:2px; background:var(--blue);}
+
+  .to-top{
+    position:fixed; right:24px; bottom:24px; width:44px; height:44px; border-radius:50%;
+    background:var(--black); color:var(--warm-white); border:none; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; box-shadow:0 10px 26px rgba(0,0,0,0.28);
+    opacity:0; pointer-events:none; transform:translateY(10px);
+    transition:opacity .25s ease, transform .25s ease, background .2s ease;
+    z-index:40;
+  }
+  .to-top.show{opacity:1; pointer-events:auto; transform:translateY(0);}
+  .to-top:hover{background:var(--blue);}
+
+  .reveal{opacity:0; transform:translateY(16px);}
+  .reveal.visible{opacity:1; transform:translateY(0); transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1; transform:none; transition:none;}
+  }
+
+  /* ============ Part-style numerals & quick-reference meta ============ */
+  .part-head{display:flex; align-items:flex-start; gap:22px; margin-bottom:18px;}
+  .part-num{
+    font-size:3.2rem; font-weight:800; color:var(--blue-tint); line-height:1;
+    -webkit-text-stroke:1.5px var(--blue); flex-shrink:0; font-variant-numeric:tabular-nums;
+  }
+  .part-head-text{flex:1; min-width:0;}
+  .part-head-text .section-intro{margin-bottom:0;}
+  .part-meta{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line);
+    border:1px solid var(--line); border-radius:10px; overflow:hidden; margin-bottom:30px;
+  }
+  .part-meta > div{background:var(--white); padding:12px 14px; display:flex; flex-direction:column; gap:4px;}
+  .pm-label{font-size:.66rem; text-transform:uppercase; letter-spacing:.08em; color:var(--grey); font-weight:700;}
+  .pm-value{font-size:.83rem; color:var(--true-black); font-weight:600;}
+  @media (max-width:720px){
+    .part-meta{grid-template-columns:1fr 1fr;}
+    .part-head{gap:14px;}
+    .part-num{font-size:2.2rem;}
+  }
+
+  .hover-hint{font-size:.78rem; color:var(--grey); font-style:italic; margin:-8px 0 16px;}
+  .s-num{
+    position:absolute; top:-10px; right:-10px; width:26px; height:26px; border-radius:50%;
+    background:var(--blue); color:#fff; font-size:.75rem; font-weight:800;
+    display:flex; align-items:center; justify-content:center; cursor:help; z-index:2;
+    box-shadow:0 2px 8px rgba(42,124,181,0.45);
+  }
+  .s-num::after{
+    content:attr(data-tip);
+    position:absolute; bottom:130%; right:0; width:230px;
+    background:var(--black); color:var(--warm-white); font-size:.74rem; font-weight:400;
+    padding:10px 12px; border-radius:8px; line-height:1.45; text-align:left;
+    opacity:0; pointer-events:none; transform:translateY(4px);
+    transition:opacity .2s ease, transform .2s ease;
+  }
+  .s-num:hover::after, .s-num:focus-visible::after{opacity:1; transform:translateY(0);}
+
+  /* ============ Cheat sheet ============ */
+  .cheat-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:14px; margin-top:20px;}
+  .cheat-card{background:var(--white); border:1px solid var(--line); border-radius:10px; padding:16px 18px;}
+  .cheat-card h4{font-size:.82rem; text-transform:uppercase; letter-spacing:.05em; color:var(--blue); margin-bottom:10px;}
+  .cheat-card ol, .cheat-card ul{margin:0; padding-left:1.1em; font-size:.83rem; color:#333;}
+  .cheat-card li{margin-bottom:5px;}
+  @media (max-width:880px){.cheat-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:640px){.cheat-grid{grid-template-columns:1fr;}}
+
+  /* ============ Troubleshooting ============ */
+  .trouble-item{
+    display:flex; gap:12px; background:var(--white); border:1px solid var(--line); border-radius:10px;
+    padding:14px 16px; margin-bottom:10px; align-items:flex-start;
+  }
+  .trouble-icon{
+    flex-shrink:0; width:24px; height:24px; border-radius:50%; background:#FFF4E5; color:#B45309;
+    display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.85rem;
+  }
+  .trouble-body b{display:block; font-size:.88rem; margin-bottom:3px;}
+  .trouble-body span{font-size:.84rem; color:#3a3a3d;}
+  .scroll-progress{
+    position:fixed; top:0; left:0; height:3px; width:0%; z-index:100;
+    background:linear-gradient(90deg, var(--blue), #79c2ef);
+  }
+
+  section h2{position:relative; display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+  .copy-link-btn{
+    opacity:0; background:none; border:none; color:var(--grey-light); cursor:pointer; padding:4px;
+    display:inline-flex; align-items:center; transition:opacity .2s ease, color .2s ease;
+  }
+  section h2:hover .copy-link-btn, .copy-link-btn:focus-visible{opacity:1;}
+  .copy-link-btn:hover{color:var(--blue);}
+  .copy-link-btn.copied{opacity:1; color:var(--blue);}
+
+  .group-header{
+    display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+    cursor:pointer; padding:8px 6px; border-radius:8px; user-select:none;
+  }
+  .group-header:hover{background:rgba(42,124,181,0.06);}
+  .group-header .chevron{flex-shrink:0; margin-top:5px; color:var(--grey); transition:transform .25s ease;}
+  .checklist-group.collapsed .group-header .chevron{transform:rotate(-90deg);}
+  .group-items{display:grid; grid-template-rows:1fr; transition:grid-template-rows .35s ease;}
+  .group-items-inner{overflow:hidden; min-height:0;}
+  .checklist-group.collapsed .group-items{grid-template-rows:0fr;}
+
+  .check-item.js-hidden{display:none;}
+
+  .prompt-wrap{position:relative;}
+  .copy-prompt-btn{
+    position:absolute; top:9px; right:10px; background:rgba(255,255,255,0.08); color:#D7DDE5;
+    border:1px solid rgba(255,255,255,0.18); border-radius:6px; padding:4px 11px; font-size:.72rem;
+    cursor:pointer; font-family:'Inter',sans-serif; transition:background .2s ease;
+  }
+  .copy-prompt-btn:hover{background:rgba(255,255,255,0.2);}
+
+  section:target, .step:target{animation:targetFlash 1.8s ease;}
+  @keyframes targetFlash{
+    0%{background:var(--blue-tint); border-radius:14px;}
+    100%{background:transparent;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    section:target, .step:target{animation:none;}
+  }
+
+  @media print{
+    .sidebar, .menu-toggle, .print-btn, .add-row-btn, .to-top, .scroll-progress, .copy-link-btn, .copy-prompt-btn, #checklistSearch{display:none !important;}
+    main{margin-left:0;}
+    section{break-inside:avoid; border-top:1px solid #ccc;}
+    .reveal{opacity:1 !important; transform:none !important;}
+    .group-items{grid-template-rows:1fr !important;}
+  }
+</style>
+</head>
+<body>
+<a href="index.html" style="position:fixed;top:14px;right:16px;z-index:9999;display:inline-flex;
+align-items:center;gap:7px;font:600 12.4px/1 'Inter',system-ui,sans-serif;color:#15201C;
+background:rgba(255,255,255,.94);border:1px solid #E8E6DF;border-radius:999px;padding:8px 14px;
+text-decoration:none;box-shadow:0 2px 6px rgba(20,32,28,.06),0 10px 26px rgba(20,32,28,.08);
+backdrop-filter:blur(8px)">
+<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>Overview</a>
+
+
+<div class="scroll-progress" id="scrollProgress"></div>
+<button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')" aria-label="Toggle navigation"><span></span></button>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="brand">
+      <img class="brand-logo" src="data:image/png;base64,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" alt="Deccan AI">
+      <div class="sub">// Playground Playbook</div>
+      <div class="tagline">Accuracy is Intelligence</div>
+    </div>
+
+    <div class="navgroup">
+      <a href="#overview">Overview &amp; Structure</a>
+      <a href="#pipeline-top">The Pipeline</a>
+      <a href="#checklist">Requirement Checklist</a>
+    </div>
+
+    <div class="navgroup">
+      <div class="navlabel">Phase 1 — Plan</div>
+      <a href="#phase-1">Phase overview</a>
+      <a class="sub" href="#p1-1">1.1 Initial research</a>
+      <a class="sub" href="#p1-2">1.2 Choose content type</a>
+      <a class="sub" href="#p1-3">1.3 Branching &amp; questions</a>
+    </div>
+
+    <div class="navgroup">
+      <div class="navlabel">Phase 2 — Draft &amp; Document</div>
+      <a href="#phase-2">Phase overview</a>
+      <a class="sub" href="#p2-1">2.1 Content + scripts</a>
+      <a class="sub" href="#p2-2">2.2 Log in tracker sheet</a>
+      <a class="sub" href="#p2-3">2.3 Get sign-off</a>
+    </div>
+
+    <div class="navgroup">
+      <div class="navlabel">Phase 3 — Produce</div>
+      <a href="#phase-3">Phase overview</a>
+      <a class="sub" href="#p3-1">3.1 Build the deck</a>
+      <a class="sub" href="#p3-2">3.2 Create videos</a>
+      <a class="sub" href="#p3-3">3.3 Intro &amp; outro</a>
+    </div>
+
+    <div class="navgroup">
+      <div class="navlabel">Phase 4 — Launch</div>
+      <a href="#phase-4">Phase overview</a>
+      <a class="sub" href="#p4-1">4.1 Map into Playground</a>
+      <a class="sub" href="#p4-2">4.2 Final review</a>
+      <a class="sub" href="#p4-3">4.3 Go live</a>
+    </div>
+
+    <div class="navgroup">
+      <div class="navlabel">Reference</div>
+      <a href="#tracker-template">Tracker Sheet Template</a>
+      <a href="#canva-style">Canva Style Guide</a>
+      <a href="#roles">Roles &amp; Responsibilities</a>
+      <a href="#cheat-sheet">Cheat Sheet</a>
+      <a href="#troubleshooting">When Something Looks Broken</a>
+      <a href="#glossary">Glossary &amp; What's Next</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="content">
+
+      <div class="hero" id="overview-top">
+        <span class="eyebrow">// Internal Playbook</span>
+        <h1>Playground Content Playbook</h1>
+        <p class="lede">The end-to-end guide for trainers and SMEs building interactive Playground courses — from the first research note to go-live. Covers what to plan, what to document, and exactly how we build the deck, video, and question logic.</p>
+        <div class="hero-meta">
+          <div><b>Audience</b> — Trainers / SMEs (content owners)</div>
+          <div><b>Covers</b> — Content creation + requirement process</div>
+          <div><b>Format</b> — Living document, update as tooling changes</div>
+        </div>
+        <button class="print-btn" onclick="window.print()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Print / Save as PDF
+        </button>
+      </div>
+
+      <div class="pipeline-wrap reveal" id="pipeline-top">
+        <div class="pipeline">
+          <div class="phase">
+            <a class="phase-node" href="#phase-1">
+              <span class="phase-num">1</span>
+              <span class="phase-name">Plan</span>
+            </a>
+            <ul class="phase-steps">
+              <li><a href="#p1-1">Research</a></li>
+              <li><a href="#p1-2">Content type</a></li>
+              <li><a href="#p1-3">Branching &amp; Qs</a></li>
+            </ul>
+          </div>
+          <div class="phase">
+            <a class="phase-node" href="#phase-2">
+              <span class="phase-num">2</span>
+              <span class="phase-name">Draft &amp; Document</span>
+            </a>
+            <ul class="phase-steps">
+              <li><a href="#p2-1">Content + scripts</a></li>
+              <li><a href="#p2-2">Tracker sheet</a></li>
+              <li><a href="#p2-3">Sign-off</a></li>
+            </ul>
+          </div>
+          <div class="phase">
+            <a class="phase-node" href="#phase-3">
+              <span class="phase-num">3</span>
+              <span class="phase-name">Produce</span>
+            </a>
+            <ul class="phase-steps">
+              <li><a href="#p3-1">Deck (Canva)</a></li>
+              <li><a href="#p3-2">Video</a></li>
+              <li><a href="#p3-3">Intro / outro</a></li>
+            </ul>
+          </div>
+          <div class="phase">
+            <a class="phase-node" href="#phase-4">
+              <span class="phase-num">4</span>
+              <span class="phase-name">Launch</span>
+            </a>
+            <ul class="phase-steps">
+              <li><a href="#p4-1">Map content</a></li>
+              <li><a href="#p4-2">Final review</a></li>
+              <li><a href="#p4-3">Go live</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- OVERVIEW -->
+      <section id="overview" class="reveal">
+        <span class="eyebrow section-eyebrow">// Overview</span>
+        <h2>How everything nests together</h2>
+        <p class="section-intro">Before touching content, get the structure straight — every downstream step (the checklist, the tracker sheet, the node mapping) assumes this hierarchy.</p>
+
+        <p class="hover-hint">↳ Hover a number on the diagram for more detail.</p>
+        <div class="structure">
+          <div class="s-box s-lp accent-lav">
+            <span class="s-num" tabindex="0" data-tip="One learning path can bundle several courses toward one program goal — plus its own campaign emails per step.">1</span>
+            <div class="s-title">Learning Path</div>
+            <div class="s-desc">The overall program. Contains multiple Courses. Example: "AI Fundamentals Learning Path."</div>
+          </div>
+          <div class="s-arrow">↓ contains</div>
+          <div class="s-nest">
+            <div class="s-box accent-sky">
+              <span class="s-num" tabindex="0" data-tip="A course is where Access Type, the Master Playground instructions, and the course-level Intro/Outro all live.">2</span>
+              <div class="s-title">Course <span style="color:var(--grey); font-weight:400;">(= Master Playground)</span></div>
+              <div class="s-desc">One subject end-to-end. Has its own description, access type, and — at this level only — one Intro video and one Outro video.</div>
+            </div>
+            <div class="s-arrow">↓ contains</div>
+            <div class="s-nest">
+              <div class="s-box accent-mint">
+                <span class="s-num" tabindex="0" data-tip="This is where Course Flow is decided and where the node structure (Video → Reading → Question) gets mapped out.">3</span>
+                <div class="s-title">Module <span style="color:var(--grey); font-weight:400;">(= Individual Playground)</span></div>
+                <div class="s-desc">One topic within the course. Has its own title, learning objectives, and a sequence of nodes.</div>
+                <div class="s-nodes">
+                  <span class="node-chip">Video</span>
+                  <span class="node-chip">Reading / Markdown</span>
+                  <span class="node-chip">Question</span>
+                  <span class="node-chip dim">repeats per video in the module</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <b>Note on Intro / Outro / End node:</b> Intro and Outro videos live at the <b>course level only</b> — one Intro before Module 1, one Outro after the last module. There is no separate "end node" screen per module; a module simply ends on its last node and moves into the next module.
+        </div>
+
+        <div class="term-grid">
+          <div class="term"><div class="t-name">SME / Trainer</div><div class="t-def">The person who researches, decides structure, writes content, and builds the course. In this team, SME and Trainer are the same person.</div></div>
+          <div class="term"><div class="t-name">Ops POC</div><div class="t-def">Receives the draft structure and checklist, helps configure the Playground platform, and joins the final review.</div></div>
+          <div class="term"><div class="t-name">Node</div><div class="t-def">A single step inside a module — a video, a reading/markdown block, or a question.</div></div>
+          <div class="term"><div class="t-name">Course Flow</div><div class="t-def">The pattern a module follows: Video + Question, Video + Markdown, Question only, etc. Decided per module.</div></div>
+        </div>
+      </section>
+
+      <!-- CHECKLIST -->
+      <section id="checklist" class="reveal">
+        <span class="eyebrow section-eyebrow">// Requirement Checklist</span>
+        <h2>Fillable course requirement checklist</h2>
+        <p class="section-intro">Work through this before you start building. Share the completed draft with your Ops POC — it's the source of truth they'll use to help configure the course. Check items off and type directly into the fields; nothing here is saved automatically, so copy finished answers into the <a href="#tracker-template">tracker sheet</a> when done.</p>
+
+        <div class="progress-label"><span id="progress-text">0 / 24 completed</span></div>
+        <div class="progress-bar-outer"><div class="progress-bar-inner" id="progress-bar"></div></div>
+        <div class="btn-row">
+          <button class="add-row-btn" onclick="downloadChecklistCSV()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download checklist as CSV
+          </button>
+          <button class="add-row-btn" onclick="setAllGroups(false)">Expand all</button>
+          <button class="add-row-btn" onclick="setAllGroups(true)">Collapse all</button>
+        </div>
+        <input type="text" id="checklistSearch" class="fill-field" placeholder="🔍 Search checklist items…" style="margin:14px 0 4px; width:100%;" oninput="filterChecklist(this.value)">
+
+        <div class="checklist-group accent-mint">
+          <div class="group-header" tabindex="0" role="button" aria-expanded="true" onclick="toggleGroup(this.closest('.checklist-group'))" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleGroup(this.closest('.checklist-group'));}">
+            <div>
+              <h3>A. Course &amp; learning path basics</h3>
+              <div class="g-desc">Filled once per course.</div>
+            </div>
+            <svg class="chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+          <div class="group-items"><div class="group-items-inner">
+
+          <div class="check-item"><input type="checkbox"><div class="ci-body"><div class="ci-label">Course / Master Playground name</div><div class="ci-hint">e.g. "Introduction to Prompt Engineering"</div><div class="fill-field" contenteditable="true" data-placeholder="Type the course name…"></div></div></div>
+
+          <div class="check-item"><input type="checkbox"><div class="ci-body"><div class="ci-label">Course description</div><div class="ci-hint">Short overview of the whole course — what it's about and who it's for.</div><div class="fill-field" contenteditable="true" data-placeholder="Type the description…"></div></div></div>
+
+          <div class="check-item"><input type="checkbox"><div class="ci-body"><div class="ci-label">No. of modules</div><div class="ci-hint">How many individual playgrounds (modules) this course will have.</div><div class="fill-field" contenteditable="true" data-placeholder="e.g. 5 modules"></div></div></div>
+
+          <div class="check-item"><input type="checkbox"><div class="ci-body"><div class="ci-label">Access type</div><div class="ci-hint">Restricted, or open to all.</div>
+            <select class="fill-field">
+              <option value="">Choose…</option>
+              <option>Open to all</option>
+              <option>Restricted</option>
+            </select>
+          </div></div>
+
+          <div class="check-item"><input type="checkbox"><div class="ci-body"><div class="ci-label">Master Playground instructions</div><div class="ci-hint">General instructions that apply across the whole course. e.g. "Complete videos before attempting quizzes."</div><div class="fill-field" contenteditable="true" data-placeholder="Type the general instructions…"></div></div></div>
+
+          <div class="check-item"><input type="checkbox"><div class="ci-body"><div class="ci-label">External assets</div><div class="ci-hint">Any PDFs, images, datasets, websites, templates, or downloadable files needed.</div><div class="fill-field" contenteditable="true" data-placeholder="List assets or paste links…"></div></div></div>
+
+          <div class="check-item"><input type="checkbox"><div class="ci-body"><div class="ci-label">Learning path name</div><div class="ci-hint">The larger program this course sits inside. e.g. "AI Fundamentals Learning Path."</div><div class="fill-field" contenteditable="true" data-placeholder="Type the learning path name…"></div></div></div>
+
+          <div class="check-item"><input type="checkbox"><div class="ci-body"><div class="ci-label">Learning path description</div><div class="ci-hint">What learners gain from completing the entire path.</div><div class="fill-field" contenteditable="true" data-placeholder="Type the description…"></div></div></div>
+
+          <div class="check-item"><input type="checkbox"><div class="ci-body"><div class="ci-label">Step name (playground)</div><div class="ci-hint">The label learners see for this module inside the path. e.g. "Step 2: Understanding Prompts."</div><div class="fill-field" contenteditable="true" data-placeholder="Type the step label…"></div></div></div>
+
+          <div class="check-item"><input type="checkbox"><div class="ci-body"><div class="ci-label">Step name (assessment)</div><div class="ci-hint">The label used for assessment stages. e.g. "Final Knowledge Check."</div><div class="fill-field" contenteditable="true" data-placeholder="Type the step label…"></div></div></div>
+
+          <div class="check-item"><input type="checkbox"><div class="ci-body"><div class="ci-label">Step 1 campaign email</div><div class="ci-hint">The email sent to a learner after completing step 1.</div><div class="fill-field" contenteditable="true" data-placeholder="Paste email copy or doc link…"></div></div></div>
+
+          <div class="check-item"><input type="checkbox"><div class="ci-body"><div class="ci-label">Step 2 campaign email</div><div class="ci-hint">The email sent after completing step 2.</div><div class="fill-field" contenteditable="true" data-placeholder="Paste email copy or doc link…"></div></div></div>
+
+          <div class="check-item"><input type="checkbox"><div class="ci-body"><div class="ci-label">Skills for learning path</div><div class="ci-hint">Skills learners need going in, or gain by completing it.</div><div class="fill-field" contenteditable="true" data-placeholder="List skills…"></div></div></div>
+          </div></div>
+        </div>
+
+        <div class="checklist-group accent-sky">
+          <div class="group-header" tabindex="0" role="button" aria-expanded="true" onclick="toggleGroup(this.closest('.checklist-group'))" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleGroup(this.closest('.checklist-group'));}">
+            <div>
+              <h3>B. Per-module structure</h3>
+              <div class="g-desc">Repeat this group for every module in the course.</div>
+            </div>
+            <svg class="chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+          <div class="group-items"><div class="group-items-inner">
+
+          <div class="check-item"><input type="checkbox"><div class="ci-body"><div class="ci-label">Playground / module title</div><div class="ci-hint">e.g. "Fine-Tuning Strategies."</div><div class="fill-field" contenteditable="true" data-placeholder="Type the module title…"></div></div></div>
+
+          <div class="check-item"><input type="checkbox"><div class="ci-body"><div class="ci-label">Learning objectives</div><div class="ci-hint">What learners should be able to do after this module. Use action words: identify, explain, create, analyze.</div><div class="fill-field" contenteditable="true" data-placeholder="Type learning objectives…"></div></div></div>
+
+          <div class="check-item"><input type="checkbox"><div class="ci-body"><div class="ci-label">Node structure</div><div class="ci-hint">The sequence of content inside the module. e.g. "Video 1 → Reading → Question → Video 2 → Question."</div><div class="fill-field" contenteditable="true" data-placeholder="Map out the node sequence…"></div></div></div>
+
+          <div class="check-item"><input type="checkbox"><div class="ci-body"><div class="ci-label">Node titles</div><div class="ci-hint">The title shown for each section/activity. e.g. "Watch: What is AI?", "Knowledge Check."</div><div class="fill-field" contenteditable="true" data-placeholder="List node titles…"></div></div></div>
+
+          <div class="check-item"><input type="checkbox"><div class="ci-body"><div class="ci-label">Course flow</div><div class="ci-hint">How content is fed for this module.</div>
+            <select class="fill-field">
+              <option value="">Choose…</option>
+              <option>Video/Slide + Question</option>
+              <option>Video/Slide + Markdown + Question</option>
+              <option>Video/Slide Only</option>
+              <option>Video/Slide + Markdown</option>
+              <option>Question + Markdown</option>
+              <option>Question Only</option>
+            </select>
+          </div></div>
+          </div></div>
+        </div>
+
+        <div class="checklist-group accent-peach">
+          <div class="group-header" tabindex="0" role="button" aria-expanded="true" onclick="toggleGroup(this.closest('.checklist-group'))" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleGroup(this.closest('.checklist-group'));}">
+            <div>
+              <h3>C. Content assets</h3>
+              <div class="g-desc">Per video / per module, as applicable.</div>
+            </div>
+            <svg class="chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+          <div class="group-items"><div class="group-items-inner">
+
+          <div class="check-item"><input type="checkbox"><div class="ci-body"><div class="ci-label">Video content</div><div class="ci-hint">The script, talking points, or explanation the video should cover.</div><div class="fill-field" contenteditable="true" data-placeholder="Paste script or doc link…"></div></div></div>
+
+          <div class="check-item"><input type="checkbox"><div class="ci-body"><div class="ci-label">Reference content</div><div class="ci-hint">Supporting material learners can check after each video — articles, PDFs, guides, links.</div><div class="fill-field" contenteditable="true" data-placeholder="List references or links…"></div></div></div>
+
+          <div class="check-item"><input type="checkbox"><div class="ci-body"><div class="ci-label">Question content</div><div class="ci-hint">Every quiz question, its answer choices, the correct answer, the message shown on a correct answer, and the pop-up shown on a wrong answer.</div><div class="fill-field" contenteditable="true" data-placeholder="Paste full question set…"></div></div></div>
+
+          <div class="check-item"><input type="checkbox"><div class="ci-body"><div class="ci-label">Branching / remediation logic</div><div class="ci-hint">Plain-language instructions on what happens after wrong answers — e.g. "3 wrong attempts → send the learner back to the previous video" or "→ move on to the next video regardless." This is fully custom per course; write it out clearly for Ops.</div><div class="fill-field" contenteditable="true" data-placeholder="Describe the branching rule…"></div></div></div>
+          </div></div>
+        </div>
+
+        <div class="checklist-group accent-pink">
+          <div class="group-header" tabindex="0" role="button" aria-expanded="true" onclick="toggleGroup(this.closest('.checklist-group'))" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleGroup(this.closest('.checklist-group'));}">
+            <div>
+              <h3>D. Course-level intro &amp; outro</h3>
+              <div class="g-desc">Filled once per course — these bookend the entire course, not each module.</div>
+            </div>
+            <svg class="chevron" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+          <div class="group-items"><div class="group-items-inner">
+
+          <div class="check-item"><input type="checkbox"><div class="ci-body"><div class="ci-label">Intro content</div><div class="ci-hint">The opening video script: welcomes learners, explains what each module covers, gives general instructions.</div><div class="fill-field" contenteditable="true" data-placeholder="Paste intro script…"></div></div></div>
+
+          <div class="check-item"><input type="checkbox"><div class="ci-body"><div class="ci-label">Outro content</div><div class="ci-hint">The closing video script: congratulates the learner and lays out next steps.</div><div class="fill-field" contenteditable="true" data-placeholder="Paste outro script…"></div></div></div>
+          </div></div>
+        </div>
+      </section>
+
+      <!-- PHASE 1 -->
+      <section id="phase-1" class="reveal accent-mint">
+        <div class="part-head">
+          <div class="part-num">01</div>
+          <div class="part-head-text">
+            <span class="eyebrow section-eyebrow">// Phase 1</span>
+            <h2>Plan</h2>
+            <p class="section-intro">Turn a course idea into a documented structure before any deck or video work starts.</p>
+          </div>
+        </div>
+        <div class="part-meta">
+          <div><span class="pm-label">Think of it as</span><span class="pm-value">The blueprint stage</span></div>
+          <div><span class="pm-label">Lives under</span><span class="pm-value">Requirement checklist — Groups A &amp; B</span></div>
+          <div><span class="pm-label">Built from</span><span class="pm-value">Research draft, content-type decisions, branching rules</span></div>
+          <div><span class="pm-label">Wraps up with</span><span class="pm-value">A documented draft, shared with Ops</span></div>
+        </div>
+
+        <div class="step" id="p1-1">
+          <div class="step-head"><span class="step-tag">1.1</span><h3>Initial research</h3></div>
+          <div class="step-body">
+            <p>Structure your research top-down: <b>Course Name → Module Titles → Video Titles</b> within each module. This is a draft — it doesn't need to be final.</p>
+            <p>Share this draft, together with the <a href="#checklist">requirement checklist</a>, with your Ops POC. This gives them an early look at the whole shape of the course while you keep refining content.</p>
+          </div>
+        </div>
+
+        <div class="step" id="p1-2">
+          <div class="step-head"><span class="step-tag">1.2</span><h3>Choose the content type per module</h3></div>
+          <div class="step-body">
+            <p>Decide whether each module needs questions after it, just readable content, a downloadable file, or some combination. This decision is the <b>Course Flow</b> field in the checklist, and it's made per module:</p>
+            <ul>
+              <li>Video/Slide + Question</li>
+              <li>Video/Slide + Markdown + Question</li>
+              <li>Video/Slide Only</li>
+              <li>Video/Slide + Markdown</li>
+              <li>Question + Markdown</li>
+              <li>Question Only</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="step" id="p1-3">
+          <div class="step-head"><span class="step-tag">1.3</span><h3>Define branching logic &amp; draft questions</h3></div>
+          <div class="step-body">
+            <p>If a module uses questions, write out — in plain instructions for Ops — what happens after a wrong answer. For example: <i>"If a user gets 3 questions wrong, send them back to the previous main video"</i> vs. <i>"…let them move on to the next video regardless."</i> There's no fixed platform rule here; every course can define this differently, so be explicit.</p>
+            <p>Alongside the branching rule, provide for every question:</p>
+            <ul>
+              <li>The question text and all answer choices</li>
+              <li>The correct answer</li>
+              <li>The message shown when the correct answer is selected</li>
+              <li>The pop-up message shown when a wrong answer is selected</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- PHASE 2 -->
+      <section id="phase-2" class="reveal accent-sky">
+        <div class="part-head">
+          <div class="part-num">02</div>
+          <div class="part-head-text">
+            <span class="eyebrow section-eyebrow">// Phase 2</span>
+            <h2>Draft &amp; document</h2>
+            <p class="section-intro">Turn the plan into real content, and get it all reviewed before a single slide is designed.</p>
+          </div>
+        </div>
+        <div class="part-meta">
+          <div><span class="pm-label">Think of it as</span><span class="pm-value">Turning the blueprint into real words</span></div>
+          <div><span class="pm-label">Lives under</span><span class="pm-value">The tracker sheet — new course tab</span></div>
+          <div><span class="pm-label">Built from</span><span class="pm-value">Deck content, voiceover scripts, Claude-assisted drafts</span></div>
+          <div><span class="pm-label">Wraps up with</span><span class="pm-value">Sign-off, before production starts</span></div>
+        </div>
+
+        <div class="step" id="p2-1">
+          <div class="step-head"><span class="step-tag">2.1</span><h3>Draft deck content &amp; voiceover scripts</h3></div>
+          <div class="step-body">
+            <p>For every video, produce two things: the <b>content that goes on the deck</b> (on-slide text) and the <b>voiceover script</b> that will be recorded over it. You can draft this solo, brief someone else with a doc, or use an AI model — after the first pass of research, we typically bring in Claude to help shape this content.</p>
+            <div class="callout pending">
+              <b>// Sample Claude prompt</b> — starting point for this step. Swap in your own version if your team prefers different phrasing.
+              <pre class="prompt-block">You're helping build a training module for an internal AI learning Playground.
+I'll give you the module topic, learning objectives, and research notes.
+
+For every slide/video section, produce two things:
+1. Deck content — short on-slide text: a headline plus 2-4 supporting bullets
+   or a single clear visual concept. Not full narration, just what appears
+   ON the slide.
+2. Voiceover script — the full narration for that slide, written to be read
+   aloud naturally (conversational, contractions are fine, no unexplained
+   jargon).
+
+House style to follow:
+- Explain the "why" before the "how."
+- Use one concrete example per concept — a side-by-side comparison, a real
+  scenario, or a worked example instead of an abstract analogy.
+- Don't use meta-phrases like "in this section we will discuss" — teach the
+  concept directly.
+- Keep each slide to one idea.
+
+Module: [module title]
+Learning objectives: [paste objectives]
+Research notes / outline: [paste your research]
+
+Output as a numbered list of slides, each with a "Deck:" line and a
+"Script:" line.</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="step" id="p2-2">
+          <div class="step-head"><span class="step-tag">2.2</span><h3>Log everything in the tracker sheet</h3></div>
+          <div class="step-body">
+            <p>Add a new tab named after your course in the <a href="https://docs.google.com/spreadsheets/d/1DTnf5wPIcTs3axu35n1OrhgxVbuAUSrTOzmNBG6avkc/edit?usp=sharing" target="_blank" rel="noopener">shared tracker sheet</a>, and record all four things from Phase 1–2 there: structure, content-type decisions, branching + question content, and deck content + scripts. Use the <a href="#tracker-template">standardized column template</a> so every course tab looks the same.</p>
+          </div>
+        </div>
+
+        <div class="step" id="p2-3">
+          <div class="step-head"><span class="step-tag">2.3</span><h3>Get sign-off</h3></div>
+          <div class="step-body">
+            <p>Get the documented tab reviewed before moving into deck production. Catching structure or content issues here is far cheaper than catching them after the deck and video are built.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- PHASE 3 -->
+      <section id="phase-3" class="reveal accent-peach">
+        <div class="part-head">
+          <div class="part-num">03</div>
+          <div class="part-head-text">
+            <span class="eyebrow section-eyebrow">// Phase 3</span>
+            <h2>Produce</h2>
+            <p class="section-intro">Build the actual assets: deck, video, and the course's intro/outro bookends.</p>
+          </div>
+        </div>
+        <div class="part-meta">
+          <div><span class="pm-label">Think of it as</span><span class="pm-value">Where the course becomes watchable</span></div>
+          <div><span class="pm-label">Lives under</span><span class="pm-value">Canva + Google Vids</span></div>
+          <div><span class="pm-label">Built from</span><span class="pm-value">The approved script and deck content from Phase 2</span></div>
+          <div><span class="pm-label">Wraps up with</span><span class="pm-value">A finished deck, video, and course intro/outro</span></div>
+        </div>
+
+        <div class="step" id="p3-1">
+          <div class="step-head"><span class="step-tag">3.1</span><h3>Build the deck in Canva</h3></div>
+          <div class="step-body">
+            <p>Use Canva, and follow the house style exactly — see the full <a href="#canva-style">Canva Style Guide</a> for every spec (fonts, sizes, colors, animation, spacing) and the sample decks to start from instead of a blank canvas.</p>
+          </div>
+        </div>
+
+        <div class="step" id="p3-2">
+          <div class="step-head"><span class="step-tag">3.2</span><h3>Create the videos</h3></div>
+          <div class="step-body">
+            <ol>
+              <li>Add transitions to the finished Canva deck.</li>
+              <li>Generate the voiceover using <b>Google Voice</b> or <b>ElevenLabs</b> — the voice must sound natural, not robotic. There's no fixed voice or preset; it's your call per course, as long as it reads naturally.</li>
+              <li>Download each slide, or a group of slides, timed to match the voiceover — as an <b>MP4</b> (to keep Canva's own animation) or a <b>PNG</b> (static), depending on what that section needs.</li>
+              <li>Assemble the clips and voiceover in <b>Google Vids</b>.</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="step" id="p3-3">
+          <div class="step-head"><span class="step-tag">3.3</span><h3>Create the course intro &amp; outro</h3></div>
+          <div class="step-body">
+            <p>Build these in Google Vids using an avatar presenter — persona is your choice per course. Both sit at the <b>course level</b>, not per module:</p>
+            <ul>
+              <li><b>Intro</b> — plays before Module 1. Explains what each module in the course covers and gives general instructions.</li>
+              <li><b>Outro</b> — plays after the final module. Congratulates the learner and lays out next steps.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- PHASE 4 -->
+      <section id="phase-4" class="reveal accent-lav">
+        <div class="part-head">
+          <div class="part-num">04</div>
+          <div class="part-head-text">
+            <span class="eyebrow section-eyebrow">// Phase 4</span>
+            <h2>Launch</h2>
+            <p class="section-intro">Bring everything into the platform, get eyes on it one last time, and ship.</p>
+          </div>
+        </div>
+        <div class="part-meta">
+          <div><span class="pm-label">Think of it as</span><span class="pm-value">Where it becomes real for learners</span></div>
+          <div><span class="pm-label">Lives under</span><span class="pm-value">The Playground platform</span></div>
+          <div><span class="pm-label">Built from</span><span class="pm-value">Every asset, mapped to its node</span></div>
+          <div><span class="pm-label">Wraps up with</span><span class="pm-value">A joint review and a live course</span></div>
+        </div>
+
+        <div class="step" id="p4-1">
+          <div class="step-head"><span class="step-tag">4.1</span><h3>Map content into the Playground</h3></div>
+          <div class="step-body">
+            <p>Upload and map the intro video, every module's videos/decks, markdown/reference content, and questions (with their branching logic) into the Playground platform, following the node structure documented in the tracker sheet.</p>
+          </div>
+        </div>
+
+        <div class="step" id="p4-2">
+          <div class="step-head"><span class="step-tag">4.2</span><h3>Final review</h3></div>
+          <div class="step-body">
+            <p>Review the live Playground end-to-end — markdown, content, videos, question flow, branching — together with the Ops POC, the SME, and any other reviewers on the team. See <a href="#roles">Roles &amp; Responsibilities</a>.</p>
+          </div>
+        </div>
+
+        <div class="step" id="p4-3">
+          <div class="step-head"><span class="step-tag">4.3</span><h3>Go live</h3></div>
+          <div class="step-body">
+            <p>Once sign-off is complete, release the course. Update its status in the tracker sheet.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TRACKER TEMPLATE -->
+      <section id="tracker-template" class="reveal">
+        <span class="eyebrow section-eyebrow">// Reference</span>
+        <h2>Standardized tracker sheet template</h2>
+        <p class="section-intro">Existing course tabs in the sheet use slightly different columns. Use this template for every new course tab going forward, so every course is documented the same way.</p>
+
+        <h3 style="font-size:.95rem; margin-bottom:6px;">Course info block <span style="color:var(--grey); font-weight:400;">(top of the tab, filled once)</span></h3>
+        <table>
+          <tr><th>Field</th><th>Value</th></tr>
+          <tr><td>Course / Master Playground name</td><td contenteditable="true"></td></tr>
+          <tr><td>Course description</td><td contenteditable="true"></td></tr>
+          <tr><td>Learning path name</td><td contenteditable="true"></td></tr>
+          <tr><td>Learning path description</td><td contenteditable="true"></td></tr>
+          <tr><td>Access type</td><td contenteditable="true"></td></tr>
+          <tr><td>No. of modules</td><td contenteditable="true"></td></tr>
+          <tr><td>Master Playground instructions</td><td contenteditable="true"></td></tr>
+          <tr><td>Skills covered</td><td contenteditable="true"></td></tr>
+          <tr><td>External assets</td><td contenteditable="true"></td></tr>
+          <tr><td>Intro video (link / status)</td><td contenteditable="true"></td></tr>
+          <tr><td>Outro video (link / status)</td><td contenteditable="true"></td></tr>
+        </table>
+
+        <h3 style="font-size:.95rem; margin:26px 0 6px;">Module &amp; video log <span style="color:var(--grey); font-weight:400;">(one row per video)</span></h3>
+        <div class="tracker-scroll">
+        <table id="tracker-table">
+          <thead>
+            <tr>
+              <th>Module</th><th>Video / Node</th><th>Course Flow</th><th>Video Link</th>
+              <th>Deck Link</th><th>Script</th><th>Markdown / Reference</th>
+              <th>Question &amp; Branching Doc</th><th>Learning Objectives</th><th>Status</th><th>Comments</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td>
+              <td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td>
+              <td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="btn-row">
+          <button class="add-row-btn" onclick="addTrackerRow()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            Add row
+          </button>
+          <button class="add-row-btn" onclick="downloadTrackerCSV()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            Download tracker sheet as CSV
+          </button>
+        </div>
+      </section>
+
+      <!-- CANVA STYLE GUIDE -->
+      <section id="canva-style" class="reveal">
+        <span class="eyebrow section-eyebrow">// Reference</span>
+        <h2>Canva style guide</h2>
+        <p class="section-intro">The golden standard for every deck. Defaults are given below — adjust size/color choices where the note says so, but keep the rest consistent.</p>
+
+        <div class="style-grid">
+          <div class="style-card"><div class="sc-label">Font family</div><div class="sc-value">Aeonik</div></div>
+          <div class="style-card"><div class="sc-label">Course heading size</div><div class="sc-value">72pt</div><div class="sc-sub">Can change with content quantity / style</div></div>
+          <div class="style-card"><div class="sc-label">Slide topic</div><div class="sc-value">48pt, Aeonik Regular</div><div class="sc-sub">Blue/purple gradient (your color choice)</div></div>
+          <div class="style-card"><div class="sc-label">Body content</div><div class="sc-value">25pt, Aeonik Light</div><div class="sc-sub">Color: dark grey</div></div>
+          <div class="style-card"><div class="sc-label">Standard animation</div><div class="sc-value">Pan</div><div class="sc-sub">Your choice is fine too</div></div>
+          <div class="style-card"><div class="sc-label">Highlight animation</div><div class="sc-value">Breathe</div><div class="sc-sub">For word / topic highlights</div></div>
+          <div class="style-card"><div class="sc-label">Text spacing</div><div class="sc-value">0</div></div>
+          <div class="style-card"><div class="sc-label">Layer transparency</div><div class="sc-value">40%</div><div class="sc-sub">Variable if needed</div></div>
+        </div>
+
+        <p style="margin-top:6px; font-weight:600; font-size:.88rem;">Sample decks (start here instead of a blank canvas):</p>
+        <div class="deck-links">
+          <a href="https://canva.link/u0028atqan8gcoi" target="_blank" rel="noopener">Sample deck 1 ↗</a>
+          <a href="https://canva.link/xoqkhqasbs5chnw" target="_blank" rel="noopener">Sample deck 2 ↗</a>
+          <a href="https://canva.link/eq26fgz4btvijry" target="_blank" rel="noopener">Sample deck 3 ↗</a>
+        </div>
+      </section>
+
+      <!-- ROLES -->
+      <section id="roles" class="reveal">
+        <span class="eyebrow section-eyebrow">// Reference</span>
+        <h2>Roles &amp; responsibilities</h2>
+        <div class="roles-grid">
+          <div class="role-card">
+            <div class="r-title">SME / Trainer</div>
+            <ul>
+              <li>Researches &amp; structures the course</li>
+              <li>Decides content type &amp; branching logic</li>
+              <li>Writes questions, scripts, deck content</li>
+              <li>Builds the deck &amp; video</li>
+              <li>Creates intro / outro</li>
+              <li>Logs everything in the tracker sheet</li>
+            </ul>
+          </div>
+          <div class="role-card">
+            <div class="r-title">Ops POC</div>
+            <ul>
+              <li>Receives the draft structure + checklist early</li>
+              <li>Helps configure the Playground platform</li>
+              <li>Maps content to nodes</li>
+              <li>Joins the final review</li>
+            </ul>
+          </div>
+          <div class="role-card">
+            <div class="r-title">Additional reviewers</div>
+            <ul>
+              <li>Join the Phase 4 final review</li>
+              <li>Check Playground, markdown, content, and video together before go-live</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHEAT SHEET -->
+      <section id="cheat-sheet" class="reveal">
+        <span class="eyebrow section-eyebrow">// Reference</span>
+        <h2>Cheat sheet</h2>
+        <p class="section-intro">The things people look up again and again, in one place.</p>
+
+        <div class="cheat-grid">
+          <div class="cheat-card">
+            <h4>Build order</h4>
+            <ol>
+              <li>Research: course → modules → videos</li>
+              <li>Decide Course Flow &amp; branching per module</li>
+              <li>Draft content + voiceover scripts</li>
+              <li>Log everything in the tracker sheet</li>
+              <li>Get sign-off</li>
+              <li>Build the deck in Canva</li>
+              <li>Create the video</li>
+              <li>Create course intro &amp; outro</li>
+              <li>Map into the Playground</li>
+              <li>Final joint review, then go live</li>
+            </ol>
+          </div>
+
+          <div class="cheat-card">
+            <h4>Course flow options</h4>
+            <ul>
+              <li>Video/Slide + Question</li>
+              <li>Video/Slide + Markdown + Question</li>
+              <li>Video/Slide Only</li>
+              <li>Video/Slide + Markdown</li>
+              <li>Question + Markdown</li>
+              <li>Question Only</li>
+            </ul>
+          </div>
+
+          <div class="cheat-card">
+            <h4>Checklist groups</h4>
+            <ul>
+              <li><b>A</b> — Course &amp; learning path basics</li>
+              <li><b>B</b> — Per-module structure</li>
+              <li><b>C</b> — Content assets</li>
+              <li><b>D</b> — Course-level intro &amp; outro</li>
+            </ul>
+          </div>
+
+          <div class="cheat-card">
+            <h4>Who does what</h4>
+            <ul>
+              <li><b>SME / Trainer</b> — owns research through build</li>
+              <li><b>Ops POC</b> — configures the platform, joins final review</li>
+              <li><b>Additional reviewers</b> — join the Phase 4 final review</li>
+            </ul>
+          </div>
+
+          <div class="cheat-card">
+            <h4>Canva quick specs</h4>
+            <ul>
+              <li>Font: Aeonik</li>
+              <li>Heading 72pt · Topic 48pt · Body 25pt</li>
+              <li>Animation: Pan · Highlight: Breathe</li>
+              <li>Spacing 0 · Transparency 40%</li>
+            </ul>
+          </div>
+
+          <div class="cheat-card">
+            <h4>Where things live</h4>
+            <ul>
+              <li><a href="https://docs.google.com/spreadsheets/d/1DTnf5wPIcTs3axu35n1OrhgxVbuAUSrTOzmNBG6avkc/edit?usp=sharing" target="_blank" rel="noopener">Tracker sheet</a></li>
+              <li><a href="#canva-style">Canva samples &amp; style guide</a></li>
+              <li><a href="#p2-1">Sample Claude prompt</a></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- TROUBLESHOOTING -->
+      <section id="troubleshooting" class="reveal">
+        <span class="eyebrow section-eyebrow">// Reference</span>
+        <h2>When something looks broken</h2>
+        <p class="section-intro">Common symptoms, and what actually causes them.</p>
+
+        <div class="trouble-item">
+          <div class="trouble-icon">!</div>
+          <div class="trouble-body"><b>Learners get stuck repeating a question endlessly</b><span>The branching/remediation logic wasn't written clearly, or wasn't handed to Ops at all — see <a href="#p1-3">Phase 1.3</a>.</span></div>
+        </div>
+        <div class="trouble-item">
+          <div class="trouble-icon">!</div>
+          <div class="trouble-body"><b>A module's deck feels inconsistent with the rest of the course</b><span>The Canva style guide wasn't followed exactly — check font, sizes, and animation against the <a href="#canva-style">style guide</a>.</span></div>
+        </div>
+        <div class="trouble-item">
+          <div class="trouble-icon">!</div>
+          <div class="trouble-body"><b>The voiceover sounds like it's reading slide bullets out loud</b><span>Deck content and voiceover script were drafted as one thing instead of two — see <a href="#p2-1">Phase 2.1</a>.</span></div>
+        </div>
+        <div class="trouble-item">
+          <div class="trouble-icon">!</div>
+          <div class="trouble-body"><b>A course's tracker tab looks different from every other course</b><span>It wasn't built on the <a href="#tracker-template">standardized column template</a>.</span></div>
+        </div>
+        <div class="trouble-item">
+          <div class="trouble-icon">!</div>
+          <div class="trouble-body"><b>Intro or outro video is missing, duplicated, or shows up per module</b><span>Remember: Intro/Outro live at the <a href="#overview">course level only</a>, never per module.</span></div>
+        </div>
+        <div class="trouble-item">
+          <div class="trouble-icon">!</div>
+          <div class="trouble-body"><b>Reviewers keep sending a course back after production has already started</b><span>Sign-off (<a href="#p2-3">Phase 2.3</a>) was skipped or rushed before moving into deck/video production.</span></div>
+        </div>
+      </section>
+
+      <!-- GLOSSARY -->
+      <section id="glossary" class="reveal">
+        <span class="eyebrow section-eyebrow">// Reference</span>
+        <h2>Glossary &amp; what's next</h2>
+
+        <table>
+          <tr><th>Term</th><th>Meaning</th></tr>
+          <tr><td>Learning Path</td><td>The overall program made up of multiple Courses.</td></tr>
+          <tr><td>Course / Master Playground</td><td>One full subject; contains multiple Modules. Has its own Intro and Outro.</td></tr>
+          <tr><td>Module / Individual Playground</td><td>One topic inside a Course; contains a sequence of Nodes.</td></tr>
+          <tr><td>Node</td><td>A single step inside a Module — video, reading/markdown, or question.</td></tr>
+          <tr><td>Course Flow</td><td>The content pattern chosen for a module (Video + Question, Question Only, etc.)</td></tr>
+          <tr><td>SME</td><td>Subject Matter Expert — in this team, the same person as the Trainer.</td></tr>
+          <tr><td>Ops POC</td><td>The operations point of contact who helps build and configure the course in-platform.</td></tr>
+        </table>
+
+        <div class="callout">
+          <b>Coming soon:</b> tooling in progress to reduce manual effort across this pipeline (deck/video generation, sheet logging, etc.). This section will be expanded once that's ready to document.
+        </div>
+      </section>
+
+      <footer>
+        <img src="data:image/png;base64,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" alt="Deccan AI" style="height:20px; width:auto; display:block; margin-bottom:10px;">
+        Deccan AI — Internal Playbook · Playground Content Creation · Living document, keep it updated as tooling and process evolve.
+      </footer>
+
+    </div>
+  </main>
+</div>
+
+<button class="to-top" id="toTopBtn" aria-label="Back to top" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+</button>
+
+<script>
+  // Checklist progress tracker
+  function updateProgress(){
+    const boxes = document.querySelectorAll('.check-item input[type="checkbox"]');
+    const total = boxes.length;
+    let done = 0;
+    boxes.forEach(b => {
+      const item = b.closest('.check-item');
+      if(b.checked){ done++; item.classList.add('done'); } else { item.classList.remove('done'); }
+    });
+    document.getElementById('progress-text').textContent = done + ' / ' + total + ' completed';
+    document.getElementById('progress-bar').style.width = (total ? (done/total*100) : 0) + '%';
+  }
+  document.querySelectorAll('.check-item input[type="checkbox"]').forEach(b => b.addEventListener('change', updateProgress));
+  updateProgress();
+
+  // Scroll-reveal for sections
+  const revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.08, rootMargin:'0px 0px -8% 0px'});
+    revealEls.forEach(el => revealObserver.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('visible'));
+  }
+
+  // Back-to-top button visibility
+  const toTopBtn = document.getElementById('toTopBtn');
+  window.addEventListener('scroll', () => {
+    if(window.scrollY > 500){ toTopBtn.classList.add('show'); } else { toTopBtn.classList.remove('show'); }
+  });
+
+  // Top reading-progress bar
+  const scrollProgress = document.getElementById('scrollProgress');
+  function updateScrollProgress(){
+    const h = document.documentElement;
+    const scrollable = h.scrollHeight - h.clientHeight;
+    const pct = scrollable > 0 ? (h.scrollTop / scrollable) * 100 : 0;
+    scrollProgress.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', updateScrollProgress);
+  updateScrollProgress();
+
+  // Checklist accordion
+  function toggleGroup(group){
+    if(!group) return;
+    const collapsed = group.classList.toggle('collapsed');
+    const header = group.querySelector('.group-header');
+    if(header) header.setAttribute('aria-expanded', String(!collapsed));
+  }
+  function setAllGroups(collapsed){
+    document.querySelectorAll('.checklist-group').forEach(g => {
+      g.classList.toggle('collapsed', collapsed);
+      const header = g.querySelector('.group-header');
+      if(header) header.setAttribute('aria-expanded', String(!collapsed));
+    });
+  }
+
+  // Checklist live search
+  function filterChecklist(query){
+    const q = query.trim().toLowerCase();
+    document.querySelectorAll('.checklist-group').forEach(group => {
+      let anyVisible = false;
+      group.querySelectorAll('.check-item').forEach(item => {
+        const match = !q || item.textContent.toLowerCase().includes(q);
+        item.classList.toggle('js-hidden', !match);
+        if(match) anyVisible = true;
+      });
+      if(q){
+        group.classList.remove('collapsed');
+        group.style.display = anyVisible ? '' : 'none';
+      } else {
+        group.style.display = '';
+      }
+    });
+  }
+
+  // Copy-link buttons on section headings
+  document.querySelectorAll('main section[id] > h2').forEach(h2 => {
+    const btn = document.createElement('button');
+    btn.className = 'copy-link-btn';
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Copy link to this section');
+    btn.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>';
+    btn.addEventListener('click', () => {
+      const id = h2.closest('section').id;
+      const url = window.location.href.split('#')[0] + '#' + id;
+      if(navigator.clipboard){
+        navigator.clipboard.writeText(url).catch(() => {});
+      }
+      btn.classList.add('copied');
+      setTimeout(() => btn.classList.remove('copied'), 1200);
+    });
+    h2.appendChild(btn);
+  });
+
+  // Copy-to-clipboard for the sample prompt
+  document.querySelectorAll('.prompt-block').forEach(pre => {
+    const wrap = document.createElement('div');
+    wrap.className = 'prompt-wrap';
+    pre.parentNode.insertBefore(wrap, pre);
+    wrap.appendChild(pre);
+    const btn = document.createElement('button');
+    btn.className = 'copy-prompt-btn';
+    btn.type = 'button';
+    btn.textContent = 'Copy';
+    btn.addEventListener('click', () => {
+      if(navigator.clipboard){
+        navigator.clipboard.writeText(pre.textContent.trim()).then(() => {
+          btn.textContent = 'Copied!';
+          setTimeout(() => btn.textContent = 'Copy', 1400);
+        }).catch(() => {});
+      }
+    });
+    wrap.appendChild(btn);
+  });
+
+  // Add row to tracker table
+  function addTrackerRow(){
+    const tbody = document.querySelector('#tracker-table tbody');
+    const newRow = tbody.rows[0].cloneNode(true);
+    [...newRow.cells].forEach(c => c.textContent = '');
+    tbody.appendChild(newRow);
+  }
+
+  // ---- CSV export helpers ----
+  function csvEscape(val){
+    val = (val === null || val === undefined) ? '' : String(val);
+    val = val.replace(/\r?\n/g, ' ').trim();
+    if(/[",]/.test(val)){
+      val = '"' + val.replace(/"/g, '""') + '"';
+    }
+    return val;
+  }
+  function rowsToCSV(rows){
+    return rows.map(r => r.map(csvEscape).join(',')).join('\r\n');
+  }
+  function triggerDownload(filename, csvString){
+    const blob = new Blob(['\uFEFF' + csvString], {type: 'text/csv;charset=utf-8;'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  function downloadChecklistCSV(){
+    const rows = [['Group','Item','Completed','Value / Notes']];
+    document.querySelectorAll('.checklist-group').forEach(group => {
+      const groupName = group.querySelector('h3') ? group.querySelector('h3').textContent.trim() : '';
+      group.querySelectorAll('.check-item').forEach(item => {
+        const label = item.querySelector('.ci-label') ? item.querySelector('.ci-label').textContent.trim() : '';
+        const checked = item.querySelector('input[type="checkbox"]').checked ? 'Yes' : 'No';
+        const select = item.querySelector('select.fill-field');
+        const editable = item.querySelector('div.fill-field');
+        const value = select ? select.value : (editable ? editable.textContent.trim() : '');
+        rows.push([groupName, label, checked, value]);
+      });
+    });
+    triggerDownload('playground_requirement_checklist.csv', rowsToCSV(rows));
+  }
+
+  function downloadTrackerCSV(){
+    const rows = [['COURSE INFO','']];
+    document.querySelectorAll('#tracker-template table')[0].querySelectorAll('tr').forEach((tr, i) => {
+      if(i === 0) return; // skip header row (Field/Value)
+      const cells = tr.querySelectorAll('td');
+      if(cells.length === 2){
+        rows.push([cells[0].textContent.trim(), cells[1].textContent.trim()]);
+      }
+    });
+    rows.push(['','']);
+    rows.push(['MODULE & VIDEO LOG']);
+    const headerCells = [...document.querySelectorAll('#tracker-table thead th')].map(th => th.textContent.trim());
+    rows.push(headerCells);
+    document.querySelectorAll('#tracker-table tbody tr').forEach(tr => {
+      const cells = [...tr.querySelectorAll('td')].map(td => td.textContent.trim());
+      rows.push(cells);
+    });
+    triggerDownload('playground_tracker_sheet.csv', rowsToCSV(rows));
+  }
+
+  // Scrollspy for sidebar nav
+  const sections = document.querySelectorAll('main section[id]');
+  const navLinks = document.querySelectorAll('.sidebar a');
+  const linkMap = {};
+  navLinks.forEach(a => {
+    const href = a.getAttribute('href').replace('#','');
+    linkMap[href] = a;
+  });
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const id = entry.target.getAttribute('id');
+      const link = linkMap[id];
+      if(!link) return;
+      if(entry.isIntersecting){
+        navLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+  }, {rootMargin: '-20% 0px -70% 0px'});
+  sections.forEach(s => observer.observe(s));
+
+  // Close mobile nav after clicking a link
+  navLinks.forEach(a => a.addEventListener('click', () => {
+    document.querySelector('.sidebar').classList.remove('open');
+  }));
+</script>
+
+</body>
+</html>
